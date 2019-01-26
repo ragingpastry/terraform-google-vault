@@ -133,13 +133,21 @@ data "google_iam_policy" "vault" {
     ]
   }
 
-  binding {
-    role = "roles/iam.serviceAccountActor"
+	binding {
+	  role = "roles/iam.serviceAccountUser"
 
-    members = [
-      "serviceAccount:${google_service_account.vault-admin.email}",
-    ]
-  }
+		members = [
+		  "serviceAccount:${google_service_account.vault-admin.email}",
+		]
+	}
+
+	binding {
+	  role = "roles/iam.serviceAccountTokenCreator"
+		
+		members = [
+		  "serviceAccount:${google_service_account.vault-admin.email}",
+		]
+	}
 
   binding {
     role = "roles/iam.serviceAccountKeyAdmin"
