@@ -119,48 +119,37 @@ resource "google_storage_bucket_object" "vault-sa-key" {
   }
 }
 
-resource "google_project_iam_policy" "vault" {
-  project     = "${var.project_id}"
-  policy_data = "${data.google_iam_policy.vault.policy_data}"
-}
-
-resource "google_project_iam_member" "vault" {
+resource "google_project_iam_member" "vault-storage-admin" {
   project = "${var.project_id}"
 	role = "roles/storage.admin"
 	member = "serviceAccount:${google_service_account.vault-admin.email}"
 }
 
-resource "google_project_iam_member" "vault" {
-  project = "${var.project_id}"
-	role = "roles/storage.admin"
-	member = "serviceAccount:${google_service_account.vault-admin.email}"
-}
-
-resource "google_project_iam_member" "vault" {
+resource "google_project_iam_member" "vault-service-account-user" {
   project = "${var.project_id}"
 	role = "roles/iam.serviceAccountUser"
 	member = "serviceAccount:${google_service_account.vault-admin.email}"
 }
 
-resource "google_project_iam_member" "vault" {
+resource "google_project_iam_member" "vault-service-account-token-creator" {
   project = "${var.project_id}"
 	role = "roles/iam.serviceAccountTokenCreator"
 	member = "serviceAccount:${google_service_account.vault-admin.email}"
 }
 
-resource "google_project_iam_member" "vault" {
+resource "google_project_iam_member" "vault-service-account-key-admin" {
   project = "${var.project_id}"
 	role = "roles/iam.serviceAccountKeyAdmin"
 	member = "serviceAccount:${google_service_account.vault-admin.email}"
 }
 
-resource "google_project_iam_member" "vault" {
+resource "google_project_iam_member" "vault-crypto-key-encrypter-decrypter" {
   project = "${var.project_id}"
 	role = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
 	member = "serviceAccount:${google_service_account.vault-admin.email}"
 }
 
-resource "google_project_iam_member" "vault" {
+resource "google_project_iam_member" "vault-log-writer" {
   project = "${var.project_id}"
 	role = "roles/logging.logWriter"
 	member = "serviceAccount:${google_service_account.vault-admin.email}"
