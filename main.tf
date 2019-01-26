@@ -124,54 +124,46 @@ resource "google_project_iam_policy" "vault" {
   policy_data = "${data.google_iam_policy.vault.policy_data}"
 }
 
-data "google_iam_policy" "vault" {
-  binding {
-    role = "roles/storage.admin"
+resource "google_project_iam_member" "vault" {
+  project = "${var.project_id}"
+	role = "roles/storage.admin"
+	member = "serviceAccount:${google_service_account.vault-admin.email}"
+}
 
-    members = [
-      "serviceAccount:${google_service_account.vault-admin.email}",
-    ]
-  }
+resource "google_project_iam_member" "vault" {
+  project = "${var.project_id}"
+	role = "roles/storage.admin"
+	member = "serviceAccount:${google_service_account.vault-admin.email}"
+}
 
-	binding {
-	  role = "roles/iam.serviceAccountUser"
+resource "google_project_iam_member" "vault" {
+  project = "${var.project_id}"
+	role = "roles/iam.serviceAccountUser"
+	member = "serviceAccount:${google_service_account.vault-admin.email}"
+}
 
-		members = [
-		  "serviceAccount:${google_service_account.vault-admin.email}",
-		]
-	}
+resource "google_project_iam_member" "vault" {
+  project = "${var.project_id}"
+	role = "roles/iam.serviceAccountTokenCreator"
+	member = "serviceAccount:${google_service_account.vault-admin.email}"
+}
 
-	binding {
-	  role = "roles/iam.serviceAccountTokenCreator"
-		
-		members = [
-		  "serviceAccount:${google_service_account.vault-admin.email}",
-		]
-	}
+resource "google_project_iam_member" "vault" {
+  project = "${var.project_id}"
+	role = "roles/iam.serviceAccountKeyAdmin"
+	member = "serviceAccount:${google_service_account.vault-admin.email}"
+}
 
-  binding {
-    role = "roles/iam.serviceAccountKeyAdmin"
+resource "google_project_iam_member" "vault" {
+  project = "${var.project_id}"
+	role = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+	member = "serviceAccount:${google_service_account.vault-admin.email}"
+}
 
-    members = [
-      "serviceAccount:${google_service_account.vault-admin.email}",
-    ]
-  }
-
-  binding {
-    role = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
-
-    members = [
-      "serviceAccount:${google_service_account.vault-admin.email}",
-    ]
-  }
-
-  binding {
-    role = "roles/logging.logWriter"
-
-    members = [
-      "serviceAccount:${google_service_account.vault-admin.email}",
-    ]
-  }
+resource "google_project_iam_member" "vault" {
+  project = "${var.project_id}"
+	role = "roles/logging.logWriter"
+	member = "serviceAccount:${google_service_account.vault-admin.email}"
 }
 
 // TLS resources
