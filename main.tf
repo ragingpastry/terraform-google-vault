@@ -121,7 +121,7 @@ resource "google_storage_bucket_object" "vault-sa-key" {
 
 resource "google_project_iam_member" "vault-storage-admin" {
   project = "${var.project_id}"
-	role = "storage.admin"
+	role = "projects/${var.project_id}/roles/storage.admin"
 	member = "serviceAccount:${google_service_account.vault-admin.email}"
 }
 
