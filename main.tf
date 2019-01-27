@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+terraform {
+  backend "gcs" {}
+}
+
 data "template_file" "vault-startup-script" {
   template = "${file("${format("%s/scripts/startup.sh.tpl", path.module)}")}"
 
